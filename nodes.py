@@ -212,6 +212,84 @@ class YARSAdv:
         }
 
 
+class YARSAdvFrack:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(self):
+        return {
+            "required": {
+                "base_resolution": (
+                    "INT",
+                    {
+                        "default": 512,
+                        "min": 512,
+                        "max": 8192,
+                        "step": 128,
+                    },
+                ),
+                "width_ratio": (
+                    "FLOAT",
+                    {
+                        "default": 1,
+                        "min": 0.1,
+                        "max": 24,
+                        "step": 0.01,
+                    },
+                ),
+                "height_ratio": (
+                    "FLOAT",
+                    {
+                        "default": 1,
+                        "min": 0.1,
+                        "max": 24,
+                        "step": 0.01,
+                    },
+                ),
+                "overextend": (
+                    "BOOLEAN",
+                    {"default": False, "label_on": "yes ", "label_off": "no "},
+                ),
+                "constant_resolution": (
+                    "BOOLEAN",
+                    {"default": False, "label_on": "yes ", "label_off": "no "},
+                ),
+            },
+        }
+
+    RETURN_TYPES = ("INT", "INT")
+    RETURN_NAMES = ("width", "height")
+    FUNCTION = "calculate"
+    OUTPUT_NODE = False
+    CATEGORY = "utils"
+
+    def calculate(
+        self,
+        base_resolution: int,
+        width_ratio: float,
+        height_ratio: float,
+        overextend: bool,
+        constant_resolution: bool,
+    ):
+        ratio: float = height_ratio / width_ratio
+
+        if constant_resolution:
+            d = calculate_constant_constant_resolution(base_resolution, ratio)
+        else:
+            d = calculate_aspect_ratio(base_resolution, ratio, overextend)
+
+        # return as dict with `ui` key to trigger onExecuted
+        return {
+            "ui": {
+                "width": [d.width],
+                "height": [d.height],
+                "ratio": [width_ratio / height_ratio],
+            },
+            "result": (d.width, d.height),
+        }
+
+
 if __name__ == "__main__":
     import unittest
 

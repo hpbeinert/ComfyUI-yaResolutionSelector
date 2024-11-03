@@ -141,7 +141,11 @@ app.registerExtension({
   name: "trop.YARS",
   async beforeRegisterNodeDef(nodeType, nodeData, app) {
     // add resolution printout
-    if (nodeData.name === "YARSAdv" || nodeData.name === "YARS") {
+    if (
+      nodeData.name === "YARSAdvFrack" ||
+      nodeData.name === "YARSAdv" ||
+      nodeData.name === "YARS"
+    ) {
       const onExecuted = nodeType.prototype.onExecuted;
       nodeType.prototype.onExecuted = function (message) {
         const r = onExecuted?.apply?.(this, arguments);
@@ -181,6 +185,7 @@ app.registerExtension({
         const entries = [
           { name: "yaResolution Selector", value: "YARS" },
           { name: "Advanced yaResolution Selector", value: "YARSAdv" },
+          { name: "Fractional yaResolution Selector", value: "YARSAdvFrack" },
         ];
         for (const entry of entries) {
           options.unshift({

@@ -1,10 +1,11 @@
-from .nodes import YARS, YARSAdv
+from .nodes import YARS, YARSAdv, YARSAdvFrack
 
 
-NODE_CLASS_MAPPINGS = {"YARS": YARS, "YARSAdv": YARSAdv}
+NODE_CLASS_MAPPINGS = {"YARS": YARS, "YARSAdv": YARSAdv, "YARSAdvFrack": YARSAdvFrack}
 NODE_DISPLAY_NAME_MAPPINGS = {
     "YARS": "yaResolution Selector",
     "YARSAdv": "yaResolution Selector (Advanced)",
+    "YARSAdvFrack": "yaResolution Selector (Fractional)",
 }
 
 
